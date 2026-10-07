@@ -46,8 +46,20 @@ export async function POST(req:Request){return guard(async()=>{
    const payload=parsed.data;const {action:_,...profile}=payload;
    const existing=await db.from('skill_passports').select('user_id').eq('user_id',u.userId).maybeSingle();checkDatabase(existing.error);
    ({error}=existing.data?await db.from('skill_passports').update(profile).eq('user_id',u.userId):await db.from('skill_passports').insert({user_id:u.userId,...profile}));break;}
-  case 'log':({error}=await db.from('skill_logs').insert({user_id:u.userId,...data}));break;
-  case 'task':({error}=await db.from('project_tasks').insert({user_id:u.userId,...data}));break;
+  case 'log':{
+   const profileCheck=await db.from('skill_passports').select('user_id').eq('user_id',u.userId).maybeSingle();checkDatabase(profileCheck.error);
+   if(!profileCheck.data){
+    const initProfile=await db.from('skill_passports').insert({user_id:u.userId,display_name:u.displayName||'Employee',headline:'',location:'',experience_years:0,target_role:'Data Analyst',training_consent:false});
+    checkDatabase(initProfile.error);
+   }
+   ({error}=await db.from('skill_logs').insert({user_id:u.userId,...data}));break;}
+  case 'task':{
+   const profileCheck=await db.from('skill_passports').select('user_id').eq('user_id',u.userId).maybeSingle();checkDatabase(profileCheck.error);
+   if(!profileCheck.data){
+    const initProfile=await db.from('skill_passports').insert({user_id:u.userId,display_name:u.displayName||'Employee',headline:'',location:'',experience_years:0,target_role:'Data Analyst',training_consent:false});
+    checkDatabase(initProfile.error);
+   }
+   ({error}=await db.from('project_tasks').insert({user_id:u.userId,...data}));break;}
   case 'share':({error}=await db.from('passport_shares').upsert({user_id:u.userId,...data},{onConflict:'user_id,company_id',ignoreDuplicates:true}));break;
   case 'unshare':({error}=await db.from('passport_shares').delete().eq('user_id',u.userId).eq('company_id',parsed.data.company_id));break;
   case 'company':({error}=await db.from('companies').insert({owner_id:u.userId,...data}));break;
