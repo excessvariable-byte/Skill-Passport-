@@ -22,7 +22,7 @@ def _active_scorer(loader):
     root=Path(tempfile.gettempdir())/'skill-passport-models'/hashlib.sha256(version.encode()).hexdigest();root.mkdir(parents=True,exist_ok=True)
     for name in ['manifest.json','background.json','readiness.onnx']:
         spec=row['artifacts'][name]
-        raw=loader.client.storage.from_('models').download(spec['path'])
+        raw=loader.client.storage.from('models').download(spec['path'])
         if len(raw)>MAX_ARTIFACT_BYTES or hashlib.sha256(raw).hexdigest()!=spec['sha256']:raise ValueError('Artifact integrity check failed')
         temp=root/(name+'.tmp');temp.write_bytes(raw);temp.replace(root/name)
     scorer=Scorer(root)

@@ -2,12 +2,5 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
   "buildCommand": "pnpm build",
-  "installCommand": "pnpm install --frozen-lockfile",
-  "functions": {
-    "api/inference.py": {
-      "maxDuration": 60,
-      "includeFiles": "ml/**",
-      "excludeFiles": "{ml/artifacts/**,ml/tests/**,ml/train_and_explain.py,ml/demo_data.py,**/*.ipynb,tests/**,docs/**,supabase/**,public/**,components/**,node_modules/**,.next/**}"
-    }
-  }
+  "installCommand": "pnpm install --frozen-lockfile"
 }

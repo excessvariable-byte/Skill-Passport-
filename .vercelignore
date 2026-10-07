@@ -6,3 +6,7 @@
 .venv/
 venv/
 __pycache__/
+ml/
+docs/
+tests/
+.sites-runtime/
