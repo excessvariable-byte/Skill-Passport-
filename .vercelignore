@@ -1,0 +1,8 @@
+*.pkl
+*.onnx
+*.csv
+*.pt
+*.bin
+.venv/
+venv/
+__pycache__/
