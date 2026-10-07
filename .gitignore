@@ -15,3 +15,6 @@ predictions.json
 
 private_snapshots*.json
 assessment_labels*.csv
+.env.local
+.next/
+.sites-runtime/
