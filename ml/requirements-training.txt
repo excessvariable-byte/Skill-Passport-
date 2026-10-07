@@ -1,0 +1,11 @@
+-r requirements-runtime.txt
+xgboost-cpu==2.1.4
+optuna==4.3.0
+shap==0.47.2
+scikit-learn==1.6.1
+onnxmltools==1.14.0
+skl2onnx==1.19.1
+onnx==1.18.0
+pytest==8.3.5
+
+protobuf==4.25.6

@@ -1,0 +1,17 @@
+node_modules/
+.next/
+out/
+.env*
+!.env.example
+.vercel/
+*.tsbuildinfo
+.DS_Store
+.test-runtime/
+.venv/
+__pycache__/
+.pytest_cache/
+ml/artifacts/
+predictions.json
+
+private_snapshots*.json
+assessment_labels*.csv

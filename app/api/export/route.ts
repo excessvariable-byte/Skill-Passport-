@@ -1,0 +1,3 @@
+import { guard, identity, workspace, ApiError } from '@/lib/server';
+export async function GET() { return guard(async () => { const u = await identity(); const w = await workspace(u.userId); if (!w.profile)
+    throw new ApiError(404, 'Save your passport before exporting.'); return new Response(JSON.stringify({ format: 'skill-passport-v1', notice: 'Self-reported evidence and prototype skill inferences. Demo credentials are not verified qualifications.', profile: w.profile, skills: w.skills, credentials: w.certificates }, null, 2), { headers: { 'Content-Type': 'application/json', 'Content-Disposition': 'attachment; filename=skill-passport.json', 'Cache-Control': 'private, no-store' } }); }); }

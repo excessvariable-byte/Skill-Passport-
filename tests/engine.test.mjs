@@ -1,0 +1,13 @@
+import {readFileSync} from 'node:fs';
+import ts from 'typescript';
+import assert from 'node:assert/strict';
+import {test} from 'node:test';
+const source=readFileSync(new URL('../lib/catalog.ts',import.meta.url),'utf8');
+const output=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
+const {inferSkills,matchRoles,sampleProfile,blankProfile,jobs}=await import('data:text/javascript;base64,'+Buffer.from(output).toString('base64'));
+const hub=p=>matchRoles(p).find(r=>r.id==='hub');
+test('sample evidence produces five supported skills and 71% hub coverage',()=>{const skills=inferSkills(sampleProfile);assert.equal(skills.length,5);assert.equal(hub(skills).score,71);assert.deepEqual(hub(skills).missing,['inventory','software']);assert.ok(skills.every(s=>s.evidence&&s.source));});
+test('training changes coverage without claiming issuer verification',()=>{assert.equal(hub(inferSkills(sampleProfile,['inventory'])).score,86);const skills=inferSkills(sampleProfile,['inventory','software']);assert.equal(hub(skills).score,100);assert.equal(skills.filter(s=>s.status==='Demo credential').length,2);});
+test('no experience yields no inferred skills, even if rating is perfect',()=>{assert.equal(inferSkills({...blankProfile,rating:5,onTime:100,payments:true}).length,0);});
+test('unknown and repeated courses do not manufacture skills',()=>{assert.equal(inferSkills(sampleProfile,['unknown']).length,5);assert.equal(inferSkills(sampleProfile,['inventory','inventory']).length,6);});
+test('changing destination changes the available job catalog',()=>{assert.equal(jobs.filter(j=>j.city==='Delhi').length,4);assert.equal(jobs.filter(j=>j.city==='Patna').length,2);});

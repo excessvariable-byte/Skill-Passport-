@@ -1,0 +1,22 @@
+{
+  "supabase_project": "cctxrjmchntgbslnnhxp",
+  "schema_status": "applied_verified",
+  "migration_version": "20261007180805",
+  "migration_name": "employee_company_ml",
+  "sql_sha256": "91bc378998b042ec40d9d53b34940b7170617dbbbc60f3382a20f18cccffa706",
+  "rls_tables_checked": 12,
+  "relevant_policies": 24,
+  "anonymous_rest_checks": "401 on all four tested tables",
+  "legacy_rows_preserved": {
+    "profiles": 2,
+    "credentials": 3
+  },
+  "google_provider_enabled": true,
+  "google_login_end_to_end_verified": false,
+  "vercel_project": "prj_oeQs4MdpFrxE2DzNdYEN4TMtNHwM",
+  "vercel_team": "syntax-873d",
+  "vercel_access": "403_forbidden",
+  "new_frontend_deployed": false,
+  "real_model_active": false,
+  "colab_notebook": "prepared_not_executed_in_user_account"
+}
